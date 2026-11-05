@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قائمة المهام | Todo List</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+        }
+
+        form.add-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 16px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-del {
+            background: #dc3545;
+        }
+
+        .btn-del:hover {
+            background: #a71d2a;
+        }
+
+        .btn-check {
+            background: #28a745;
+        }
+
+        .btn-check:hover {
+            background: #1e7e34;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>قائمة المهام</h1>
+
+        <form action="/add" method="POST" class="add-form">
+            <input type="text" name="task" placeholder="أضف مهمة جديدة..." required autocomplete="off">
+            <button type="submit">إضافة</button>
+        </form>
+
+        <ul>
+            <% todos.forEach(todo => { %>
+            <li>
+                <span class="<%= todo.completed ? 'completed' : '' %>"><%= todo.task %></span>
+                <div class="actions">
+                    <form action="/toggle/<%= todo._id %>" method="POST" style="display:inline;">
+                        <button type="submit" class="btn-check"><%= todo.completed ? 'إلغاء' : 'إنجاز' %></button>
+                    </form>
+                    <form action="/delete/<%= todo._id %>" method="POST" style="display:inline;">
+                        <button type="submit" class="btn-del">حذف</button>
+                    </form>
+                </div>
+            </li>
+            <% }); %>
+        </ul>
+    </div>
+</body>
+
+</html>
